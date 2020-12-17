@@ -162,14 +162,15 @@ class MultiGPUCheckpoint(ModelCheckpoint):
             self.model = model
 
 
-def build_feature_model(input_shape, name='', dense_layers=[1000, 1000],
+def build_feature_model(input_shape, name='', args=None, dense_layers=[1000, 1000],
                         activation='relu', residual=False,
                         dropout_rate=0, permanent_dropout=True):
+    initializer = keras.initializers.RandomNormal(mean=0.0, stddev=0.05, seed=args.rng_seed)
     x_input = Input(shape=input_shape)
     h = x_input
     for i, layer in enumerate(dense_layers):
         x = h
-        h = Dense(layer, activation=activation)(h)
+        h = Dense(layer, activation=activation, kernel_initializer=initializer)(h)
         if dropout_rate > 0:
             if permanent_dropout:
                 h = PermanentDropout(dropout_rate)(h)
@@ -212,7 +213,7 @@ def build_model(loader, args, permanent_dropout=True, silent=False):
             else:
                 dense_feature_layers = args.dense_feature_layers
 
-            box = build_feature_model(input_shape=shape, name=fea_type,
+            box = build_feature_model(input_shape=shape, name=fea_type, args=args,
                                       dense_layers=dense_feature_layers,
                                       dropout_rate=dropout_rate, permanent_dropout=permanent_dropout)
             if not silent:
@@ -234,11 +235,11 @@ def build_model(loader, args, permanent_dropout=True, silent=False):
         encoded_inputs.append(encoded)
 
     merged = keras.layers.concatenate(encoded_inputs)
-
+    initializer = keras.initializers.RandomNormal(mean=0.0, stddev=0.05, seed=args.rng_seed)
     h = merged
     for i, layer in enumerate(args.dense):
         x = h
-        h = Dense(layer, activation=args.activation)(h)
+        h = Dense(layer, activation=args.activation, kernel_initializer=initializer)(h)
         if dropout_rate > 0:
             if permanent_dropout:
                 h = PermanentDropout(dropout_rate)(h)
