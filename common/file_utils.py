@@ -40,9 +40,9 @@ else:
 
 
 def get_file(fname, origin, untar=False,
-             #md5_hash=None, datadir='../Data/common'):
-             #md5_hash=None, cache_subdir='common', datadir='../Data/common'):
-             md5_hash=None, cache_subdir='common', datadir=None): # datadir argument was never actually used so changing it to None
+             # md5_hash=None, datadir='../Data/common'):
+             # md5_hash=None, cache_subdir='common', datadir='../Data/common'):
+             md5_hash=None, cache_subdir='common', datadir=None):  # datadir argument was never actually used so changing it to None
     """ Downloads a file from a URL if it not already in the cache.
         Passing the MD5 hash will verify the file after download as well
         as if it is already present in the cache.
@@ -75,7 +75,7 @@ def get_file(fname, origin, untar=False,
     if not os.path.exists(datadir):
         os.makedirs(datadir)
 
-    #if untar:
+    # if untar:
     #    fnamesplit = fname.split('.tar.gz')
     #    untar_fpath = os.path.join(datadir, fnamesplit[0])
 
@@ -127,6 +127,10 @@ def get_file(fname, origin, untar=False,
         try:
             try:
                 urlretrieve(origin, fpath, dl_progress)
+<<<<<<< HEAD
+=======
+                # fpath = wget.download(origin)
+>>>>>>> 6f6a084d78467217489c1c7d3f79e12298b14954
             except URLError as e:
                 raise Exception(error_msg.format(origin, e.errno, e.reason))
             except HTTPError as e:
