@@ -19,7 +19,7 @@ Using machine learning to predict drug response can be carried using multiple te
 * Trained model weights and topology to be used in inference.
 
 ### Publication:
-[Xia, Fangfang, et al. "Predicting tumor cell line response to drug pairs with deep learning." BMC bioinformatics 19.18 (2018): 71-79.](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-018-2509-3?optIn=true)
+Xia, Fangfang, et al. ["Predicting tumor cell line response to drug pairs with deep learning."](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-018-2509-3?optIn=true) BMC bioinformatics 19.18 (2018): 71-79.
 
 ### Technical Details:
 Please refer to this [README](./Pilot1/Combo/README.md)
