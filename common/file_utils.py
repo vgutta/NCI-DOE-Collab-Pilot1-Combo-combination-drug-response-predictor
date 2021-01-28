@@ -127,10 +127,7 @@ def get_file(fname, origin, untar=False,
         try:
             try:
                 urlretrieve(origin, fpath, dl_progress)
-<<<<<<< HEAD
-=======
                 # fpath = wget.download(origin)
->>>>>>> 6f6a084d78467217489c1c7d3f79e12298b14954
             except URLError as e:
                 raise Exception(error_msg.format(origin, e.errno, e.reason))
             except HTTPError as e:

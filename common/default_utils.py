@@ -658,15 +658,10 @@ def get_common_parser(parser):
                         help="overrides the number of validation samples if set to nonzero")
 
     # Backend configuration
-<<<<<<< HEAD
     parser.add_argument("--gpus", nargs="*",
                         default=argparse.SUPPRESS,
                         #default=[0],
                         type=int,
-=======
-    parser.add_argument("--gpus", nargs='+', type=int,
-                        default=argparse.SUPPRESS,
->>>>>>> 6f6a084d78467217489c1c7d3f79e12298b14954
                         help="set IDs of GPUs to use")
 
     # profiling flags
@@ -675,7 +670,6 @@ def get_common_parser(parser):
                         help="Turn profiling on or off")
 
     # cyclic learning rate
-<<<<<<< HEAD
     parser.add_argument("--clr_flag", 
                         default=argparse.SUPPRESS,
                         #default=None, 
@@ -697,16 +691,6 @@ def get_common_parser(parser):
     parser.add_argument("--clr_gamma", type=float, 
                         default=argparse.SUPPRESS,
                         #default=0.999994, 
-=======
-    parser.add_argument("--clr_flag", default=argparse.SUPPRESS, type=str2bool, help="CLR flag (boolean)")
-    parser.add_argument("--clr_mode", default=argparse.SUPPRESS, type=str, choices=['trng1', 'trng2', 'exp'],
-                        help="CLR mode (default: trng1)")
-    parser.add_argument("--clr_base_lr", type=float, default=argparse.SUPPRESS,
-                        help="Base lr for cycle lr.")
-    parser.add_argument("--clr_max_lr", type=float, default=argparse.SUPPRESS,
-                        help="Max lr for cycle lr.")
-    parser.add_argument("--clr_gamma", type=float, default=argparse.SUPPRESS,
->>>>>>> 6f6a084d78467217489c1c7d3f79e12298b14954
                         help="Gamma parameter for learning cycle LR.")
 
     return parser
