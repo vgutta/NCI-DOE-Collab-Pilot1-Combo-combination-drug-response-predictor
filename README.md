@@ -1,24 +1,25 @@
-# Benchmarks
-ECP-CANDLE Benchmarks
+# NCI-DOE-Collab-Pilot1-Combo-Combination-Drug-Response-Predictor
+
+### Description:
+The combination drug response predictor (Combo) shows how to predict tumor cell line growth to drug pairs in the [NCI-ALMANAC](https://www.ncbi.nlm.nih.gov/pubmed/28446463) database using artificial neural networks.
 
 
-This repository contains the CANDLE benchmark codes. These codes implement deep learning architectures that are relevant to problems in cancer. These architectures address problems at different biological scales, specifically problems at the molecular, cellular and population scales.
+### User Community:	
+Researchers interested in bioinformatics; computational cancer biology, drug discovery, and machine learning 
 
-The naming conventions adopted reflect the different biological scales.
+### Usability:	
+The provided untrained model can be used by a data scientist to be retrained with the shared preprocessed data/their own preprocessed data, or use the trained model to predict the drug response from the NCI-ALMANAC study. The provided scripts use data that has been downloaded and normalized from NCI-ALMANAC.
 
-Pilot1 (P1) benchmarks are formed out of problems and data at the cellular level. The high level goal of the problem behind the P1 benchmarks is to predict drug response based on molecular features of tumor cells and drug descriptors.
+### Uniqueness:	
+Using machine learning to predict drug response can be carried using multiple techniques. The general rule is that classical methods like random forests would perform better for small size datasets, while neural network approaches like Combo would perform better for relatively larger size data.
 
-Pilot2 (P2) benchmarks are formed out of problems and data at the molecular level. The high level goal of the problem behind the P2 benchmarks is molecular dynamic simulations of proteins involved in cancer, specifically the RAS protein.
+### Components:	
+* Processed training and test data
+* Untrained neural network model
+* Trained model weights and topology to be used in inference.
 
-Pilot3 (P3) benchmarks are formed out of problems and data at the population level. The high level goal of the problem behind the P3 benchmarks is to predict cancer recurrence in patients based on patient related data.
+### Publication:
+[Xia, Fangfang, et al. "Predicting tumor cell line response to drug pairs with deep learning." BMC bioinformatics 19.18 (2018): 71-79.](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-018-2509-3?optIn=true)
 
-Each of the problems (P1,P2,P3) informed the implementation of specific benchmarks, so P1B3 would be benchmark three of problem 1.
-At this point, we will refer to a benchmark by it's problem area and benchmark number. So it's natural to talk of the P1B1 benchmark. Inside each benchmark directory, there exists a readme file that contains an overview of the benchmark, a description of the data and expected outcomes along with instructions for running the benchmark code.
-
-Over time, we will be adding implementations that make use of different tensor frameworks. The primary (baseline) benchmarks are implemented using keras, and are named with '_baseline' in the name, for example p3b1_baseline_keras2.py. 
-
-Implementations that use alternative tensor frameworks, such as mxnet or neon, will have the name of the framework in the name. Examples can be seen in the P1B3 benchmark contribs/ directory, for example:
-        p1b3_mxnet.py
-        p1b3_neon.py
-
-Documentation: https://ecp-candle.github.io/Candle/html/readme.html
+### Technical Details:
+Please refer to this [README](./Pilot1/Combo/README.md)
