@@ -11,6 +11,7 @@ from six.moves.urllib.error import URLError, HTTPError
 
 import requests
 from generic_utils import Progbar
+from  modac_utils import get_file_from_modac
 
 
 # Under Python 2, 'urlretrieve' relies on FancyURLopener from legacy
@@ -37,7 +38,6 @@ if sys.version_info[0] == 2:
                 fd.write(chunk)
 else:
     from six.moves.urllib.request import urlretrieve
-
 
 def get_file(fname, origin, untar=False,
              # md5_hash=None, datadir='../Data/common'):
