@@ -37,9 +37,11 @@ To setup the python environment needed to train and run this model, first make s
 
 ### Running the baseline implementation
 
+Detailed explanation of command line arguments can be found in [combo.py](./combo.py).
+
 ```
 $ cd Pilot1/Combo
-$ python combo_baseline_keras2.py --cell_features rnaseq --drug_features descriptors --residual True --cp True --epochs 100 --use_landmark_genes True --warmup_lr True --reduce_lr True --base_lr 0.0003 -z 128 --preprocess_rna source_scale
+$ python combo_baseline_keras2.py --cell_features rnaseq --drug_features descriptors --residual True --cp True --epochs 100 --use_landmark_genes True --warmup_lr True --reduce_lr True --base_lr 0.0003 -z 128 --preprocess_rna source_scale --dropout 0.2 --save_path save/uq
 ```
 
 #### Example output
@@ -140,59 +142,56 @@ Train on 220890 samples, validate on 55222 samples
 ...
 ...
 
-Epoch 48/100
-
-20890/220890 [==============================] - 22s 97us/step - loss: 9.2847e-04 - mae: 0.0172 - r2: 0.9966 - val_loss: 0.0209 - val_mae: 0.0876 - val_r2: 0.9227
-...
-...
+Epoch 100/100
+220890/220890 [==============================] - 22s 102us/step - loss: 0.0110 - mae: 0.0724 - r2: 0.9595 - val_loss: 0.0224 - val_mae: 0.0970 - val_r2: 0.9172
 Comparing y_true and y_pred:
-  mse: 0.0198
-  mae: 0.0874
-  r2: 0.9286
-  corr: 0.9641
-
+  mse: 0.0225
+  mae: 0.0972
+  r2: 0.9187
+  corr: 0.9585
 ```
 
 #### Inference
 
 There is a separate inference script that can be used to predict drug pair response on combinations of sample sets and drug sets with a trained model.
 ```
-$ python infer.py --sample_set NCIPDM --drug_set ALMANAC
+#small inference for testing
+$python infer.py --sample_set NCIPDM --drug_set ALMANAC --use_landmark_genes
 
 Using TensorFlow backend.
 Predicting drug response for 6381440 combinations: 590 samples x 104 drugs x 104 drugs
 100%|██████████████████████████████████████████████████████████████████████| 639/639 [14:56<00:00,  1.40s/it]
 ```
-Example trained model files can be downloaded here: [saved.model.h5](http://ftp.mcs.anl.gov/pub/candle/public/benchmarks/Pilot1/combo/saved.model.h5) and [saved.weights.h5](http://ftp.mcs.anl.gov/pub/candle/public/benchmarks/Pilot1/combo/saved.weights.h5).
 
-The inference script also accepts models trained with [dropout as a Bayesian Approximation](https://arxiv.org/pdf/1506.02142.pdf) for uncertainty quantification. Here is an example command line to make 100 point predictions for each sample-drugs combination in a subsample of the GDSC data.
+The inference script also accepts models trained with [dropout as a Bayesian Approximation](https://arxiv.org/pdf/1506.02142.pdf) for uncertainty quantification. 
+
+Combo inference generates two files:
+
+comb_pred_{cellset}_{drugset}.all.tsv has all prediction instances: [Sample, Drug1, Drug2, N, Seq, PredGrowth]
+comb_pred_{cellset}_{drugset}.all.tsv contains the aggregated statistics: [Sample, Drug1, Drug2, N, PredGrowthMean, PredGrowthStd, PredGrowthMin, PredGrowthMax]
+
+Note that the inference code can be used to generate multiple predictions for the same (sample, drug) pair with the `--n_pred` parameter. This number is shown in the N column, and the sequential number for the individual predictions is denoted by Seq.
+
+Here is an example command line to make 100 point predictions for each sample-drugs combination in a subsample of the GDSC data.
 
 ```
-$ python infer.py -s GDSC -d NCI_IOA_AOA --ns 10 --nd 5 -m saved.uq.model.h5 -w saved.uq.weights.h5 -n 100
+$python infer.py -s GDSC -d NCI_IOA_AOA --ns 10 --nd 5 --use_landmark_genes -m uq.model.h5 -w uq.weights.h5 -n 10
 
-$ cat comb_pred_GDSC_NCI_IOA_AOA.tsv
-Sample  Drug1   Drug2   N       PredGrowthMean  PredGrowthStd   PredGrowthMin   PredGrowthMax
-GDSC.22RV1      NSC.102816      NSC.102816      100     0.1688  0.0899  -0.0762 0.3912
-GDSC.22RV1      NSC.102816      NSC.105014      100     0.3189  0.0920  0.0914  0.5550
-GDSC.22RV1      NSC.102816      NSC.109724      100     0.6514  0.0894  0.4739  0.9055
-GDSC.22RV1      NSC.102816      NSC.118218      100     0.5682  0.1164  0.2273  0.8891
-GDSC.22RV1      NSC.102816      NSC.122758      100     0.3787  0.0833  0.1779  0.5768
-GDSC.22RV1      NSC.105014      NSC.102816      100     0.1627  0.1060  -0.0531 0.5077
+$head comb_pred_GDSC_NCI_IOA_AOA.tsv
+
+Sample  Drug1   Drug2   N   PredGrowthMean  PredGrowthStd   PredGrowthMin   PredGrowthMax
+GDSC.22RV1  NSC.102816  NSC.102816  10  0.7323  0.1722  0.3545  0.8919
+GDSC.22RV1  NSC.102816  NSC.105014  10  0.7638  0.2280  0.1091  0.9200
+GDSC.22RV1  NSC.102816  NSC.109724  10  0.8755  0.0491  0.7893  0.9542
+GDSC.22RV1  NSC.102816  NSC.118218  10  0.8710  0.0424  0.7593  0.9130
+GDSC.22RV1  NSC.102816  NSC.122758  10  0.8558  0.0509  0.7437  0.9263
+GDSC.22RV1  NSC.105014  NSC.102816  10  0.7994  0.1995  0.2616  0.9429
+GDSC.22RV1  NSC.105014  NSC.105014  10  0.8662  0.0598  0.7160  0.9248
+GDSC.22RV1  NSC.105014  NSC.109724  10  0.8024  0.1276  0.4626  0.9312
+GDSC.22RV1  NSC.105014  NSC.118218  10  0.8673  0.1094  0.5828  1.0078
 ...
 ```
 
 A version of trained model files with dropout are available here: [saved.uq.model.h5](http://ftp.mcs.anl.gov/pub/candle/public/benchmarks/Pilot1/combo/saved.uq.model.h5) and [saved.uq.weights.h5](http://ftp.mcs.anl.gov/pub/candle/public/benchmarks/Pilot1/combo/saved.uq.weights.h5).
 
-## Profile runs
-We have run the same configuration across multiple machines and compared the resource utilization. 
-```
-python uno_baseline_keras2.py --conf combo_perf_benchmark.txt
-```
 
-| Machine | Time to complete (HH:mm:ss) | Time per epoch (s) | Perf factor <sup>*</sup> | CPU % | Mem % | Mem GB | GPU % | GPU Mem % | Note |
-| ------- | --------------------------: | -----------------: | -----------------------: | ----: | ----: | -----: | ----: | --------: | ---- |
-| Theta | 1:14:12 | 811 | 0.31 | 7.6 | 7.6 | 12.8 | | |
-| Nucleus | 0:14:13 | 72 | 3.47 | 3.8 | 9.3 | 21.9 | 63.4 | 91.9 |
-| Tesla (K20) | 0:44:17 | 250 | 1.00 | 3.9 | 42.3 | 12.9 | 73.8 | 53.3 |
-| Titan | | | | | | | | | keras version 2.0.3 does not supprot model.clone_model() which is introduced in 2.0.7 |
-* Time per epoch on the machine divided by time per epoch of Titan (or Tesla)
