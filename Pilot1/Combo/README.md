@@ -154,9 +154,11 @@ Comparing y_true and y_pred:
 #### Inference
 
 There is a separate inference script that can be used to predict drug pair response on combinations of sample sets and drug sets with a trained model.
+
+A version of trained model files with dropout are available here: [TODO](http://ftp.mcs.anl.gov/pub/candle/public/benchmarks/Pilot1/combo/saved.uq.model.h5) and [TODO](http://ftp.mcs.anl.gov/pub/candle/public/benchmarks/Pilot1/combo/saved.uq.weights.h5).
 ```
 #small inference for testing
-$python infer.py --sample_set NCIPDM --drug_set ALMANAC --use_landmark_genes
+$python infer.py --sample_set NCIPDM --drug_set ALMANAC --use_landmark_genes -m uq.model.h5 -w uq.weights.h5
 
 Using TensorFlow backend.
 Predicting drug response for 6381440 combinations: 590 samples x 104 drugs x 104 drugs
@@ -172,7 +174,7 @@ comb_pred_{cellset}_{drugset}.all.tsv contains the aggregated statistics: [Sampl
 
 Note that the inference code can be used to generate multiple predictions for the same (sample, drug) pair with the `--n_pred` parameter. This number is shown in the N column, and the sequential number for the individual predictions is denoted by Seq.
 
-Here is an example command line to make 100 point predictions for each sample-drugs combination in a subsample of the GDSC data.
+Here is an example command line to make 10 point predictions for each sample-drugs combination in a subsample of the GDSC data.
 
 ```
 $python infer.py -s GDSC -d NCI_IOA_AOA --ns 10 --nd 5 --use_landmark_genes -m uq.model.h5 -w uq.weights.h5 -n 10
@@ -192,6 +194,6 @@ GDSC.22RV1  NSC.105014  NSC.118218  10  0.8673  0.1094  0.5828  1.0078
 ...
 ```
 
-A version of trained model files with dropout are available here: [saved.uq.model.h5](http://ftp.mcs.anl.gov/pub/candle/public/benchmarks/Pilot1/combo/saved.uq.model.h5) and [saved.uq.weights.h5](http://ftp.mcs.anl.gov/pub/candle/public/benchmarks/Pilot1/combo/saved.uq.weights.h5).
+
 
 
