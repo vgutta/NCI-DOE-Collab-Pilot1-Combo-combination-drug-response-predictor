@@ -1,50 +1,62 @@
 ## Combo: Predicting Tumor Cell Line Response to Drug Pairs
 
-**Overview**: Given combination drug screening results on NCI60 cell lines available at the NCI-ALMANAC database, build a deep learning network that can predict the growth percentage from the cell line molecular features and the descriptors of both drugs.
+### Overview
+Given combination drug screening results on NCI60 cell lines available at the NCI-ALMANAC database, build a deep learning network that can predict the growth percentage from the cell line molecular features and the descriptors of both drugs.
 
 **Relationship to core problem**: This benchmark is an example one of the core capabilities needed for the Pilot 1 Drug Response problem: combining multiple molecular assays and drug descriptors in a single deep learning framework for response prediction.
 
 **Expected outcome**: Build a DNN that can predict growth percentage of a cell line treated with a pair of drugs.
+&#x1F534;_**(Question: What is DNN? Will the audience already know?)**_
 
 ### Benchmark Specs Requirements
 
+&#x1F534;_**(Question: Does "specs" stand for "specifications"? A noun as an adjective is typically singular in form (car dealership, not cars dealership). Did you intend to say "Specifications and Requirements" or "Specification Requirements"?)**_
+
 #### Description of the Data
-* Data source: Combo drug response screening results from NCI-ALMANAC; 5-platform normalized expression, microRNA expression, and proteome abundance data from the NCI; Dragon7 generated drug descriptors based on 2D chemical structures from NCI
-* Input dimensions: ~30K with default options: 26K normalized expression levels by gene + 4K drug descriptors; 59 cell lines; a subset of 54 FDA-approved drugs
-Output dimensions: 1 (growth percentage)
-* Sample size: 85,303 (cell line, drug 1, drug 2) tuples from the original 304,549 in the NCI-ALMANAC database
-* Notes on data balance: there are more ineffective drug pairs than effective pairs; data imbalance is somewhat reduced by using only the best dose combination for each (cell line, drug 1, drug 2) tuple as training and validation data
+* Data source: Combo drug response screening results from NCI-ALMANAC; 5-platform normalized expression, microRNA expression, and proteome abundance data from the NCI; Dragon7 generated drug descriptors based on 2D chemical structures from NCI.
+* Input dimensions: ~30K with default options: 26K normalized expression levels by gene + 4K drug descriptors; 59 cell lines; a subset of 54 FDA-approved drugs.
+* Output dimensions: 1 (growth percentage).
+* Sample size: 85,303 tuples (cell line, drug 1, drug 2) from the original 304,549 in the NCI-ALMANAC database.
+* Notes on data balance: Ineffective drug pairs exceed effective pairs; data imbalance is somewhat reduced by using only the best dose combination for each tuple (cell line, drug 1, drug 2) as training and validation data.
+
+&#x1F534;_**(Question: I moved "tuple" to before the parenthetical, but will the audience already know what it is?)**_
 
 #### Expected Outcomes
-* Regression. Predict percent growth for any NCI-60 cell line and drugs combination
-* Dimension: 1 scalar value corresponding to the percent growth for a given drug concentration. Output range: [-100, 100]
+* Regression: Predict percent growth for any NCI-60 cell line and drugs combination.
+* Dimension: 1 scalar value corresponding to the percent growth for a given drug concentration. 
+* Output range: [-100, 100].
 
 #### Evaluation Metrics
-* Accuracy or loss function: mean squared error, mean absolute error, and R^2
-* Expected performance of a naïve method: mean response, linear regression or random forest regression.
+* Accuracy or loss function: Mean squared error, mean absolute error, and R^2.
+* Expected performance of a naïve method: Mean response, linear regression or random forest regression.
 
 #### Description of the Network
-* Proposed network architecture: two-stage neural network that is jointly trained for feature encoding and response prediction; shared submodel for each drug in the pair
-* Number of layers: 3-4 layers for feature encoding submodels and response prediction submodels, respectively
+* Proposed network architecture: Two-stage neural network that is jointly trained for feature encoding and response prediction; shared submodel for each drug in the pair.
+* Number of layers: 3 layers for feature encoding submodels and 4 layers for response prediction submodels. 
 
-### Setup:
-To setup the python environment needed to train and run this model, first make sure you install [conda](https://docs.conda.io/en/latest/) package manager, clone this repository, then create the environment as shown below.
+&#x1F534;_**(Question: I revised the 2nd bullet because "respectively" isn't usually used with a range like "3-4". Is my revision correct?)**_
+
+### Setup
+To set up the Python environment needed to train and run this model:
+1. Install [conda](https://docs.conda.io/en/latest/) package manager.
+2. Clone this repository.
+3. Create the environment as shown below.
 
 ```bash
    conda env create -f environment.yml -n Combo
    conda activate Combo
    ```
 
-### Running the baseline implementation
+### Running the Baseline Implementation
 
-Detailed explanation of command line arguments can be found in [combo.py](./combo.py).
+For a detailed explanation of command line arguments, refer to [combo.py](./combo.py).
 
 ```
 $ cd Pilot1/Combo
 $ python combo_baseline_keras2.py --cell_features rnaseq --drug_features descriptors --residual True --cp True --epochs 100 --use_landmark_genes True --warmup_lr True --reduce_lr True --base_lr 0.0003 -z 128 --preprocess_rna source_scale --dropout 0.2 --save_path save/uq
 ```
 
-#### Example output
+#### Example Output
 ```
 Loaded 317899 unique (CL, D1, D2) response sets.
 Filtered down to 276112 rows with matching information.
@@ -168,13 +180,14 @@ Predicting drug response for 6381440 combinations: 590 samples x 104 drugs x 104
 The inference script also accepts models trained with [dropout as a Bayesian Approximation](https://arxiv.org/pdf/1506.02142.pdf) for uncertainty quantification. 
 
 Combo inference generates two files:
+* comb_pred_{cellset}_{drugset}.all.tsv has all prediction instances: [Sample, Drug1, Drug2, N, Seq, PredGrowth]
+* comb_pred_{cellset}_{drugset}.all.tsv contains the aggregated statistics: [Sample, Drug1, Drug2, N, PredGrowthMean, PredGrowthStd, PredGrowthMin, PredGrowthMax]
 
-comb_pred_{cellset}_{drugset}.all.tsv has all prediction instances: [Sample, Drug1, Drug2, N, Seq, PredGrowth]
-comb_pred_{cellset}_{drugset}.all.tsv contains the aggregated statistics: [Sample, Drug1, Drug2, N, PredGrowthMean, PredGrowthStd, PredGrowthMin, PredGrowthMax]
+Note that the inference code can be used to generate multiple predictions for the same sample-drug pair with the `--n_pred` parameter. This number is shown in the N column, and the sequential number for the individual predictions is denoted by Seq.
 
-Note that the inference code can be used to generate multiple predictions for the same (sample, drug) pair with the `--n_pred` parameter. This number is shown in the N column, and the sequential number for the individual predictions is denoted by Seq.
+Here is an example command line to make 10 point predictions for each sample-drug combination in a subsample of the GDSC data.
 
-Here is an example command line to make 10 point predictions for each sample-drugs combination in a subsample of the GDSC data.
+&#x1F534;_**(Question: What is GDSC? Will the audience already know?)**_
 
 ```
 $python infer.py -s GDSC -d NCI_IOA_AOA --ns 10 --nd 5 --use_landmark_genes -m uq.model.h5 -w uq.weights.h5 -n 10
