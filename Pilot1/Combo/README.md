@@ -5,12 +5,9 @@ Given combination drug screening results on NCI60 cell lines available at the NC
 
 **Relationship to core problem**: This benchmark is an example one of the core capabilities needed for the Pilot 1 Drug Response problem: combining multiple molecular assays and drug descriptors in a single deep learning framework for response prediction.
 
-**Expected outcome**: Build a DNN that can predict growth percentage of a cell line treated with a pair of drugs.
-&#x1F534;_**(Question: What is DNN? Will the audience already know?)**_
+**Expected outcome**: Build a Deep Neural Network that can predict growth percentage of a cell line treated with a pair of drugs.
+&#x1F534;_**(Question: What is DNN? Will the audience already know?)**_ G.Z. Fixed
 
-### Benchmark Specs Requirements
-
-&#x1F534;_**(Question: Does "specs" stand for "specifications"? A noun as an adjective is typically singular in form (car dealership, not cars dealership). Did you intend to say "Specifications and Requirements" or "Specification Requirements"?)**_
 
 #### Description of the Data
 * Data source: Combo drug response screening results from NCI-ALMANAC; 5-platform normalized expression, microRNA expression, and proteome abundance data from the NCI; Dragon7 generated drug descriptors based on 2D chemical structures from NCI.
@@ -19,7 +16,7 @@ Given combination drug screening results on NCI60 cell lines available at the NC
 * Sample size: 85,303 tuples (cell line, drug 1, drug 2) from the original 304,549 in the NCI-ALMANAC database.
 * Notes on data balance: Ineffective drug pairs exceed effective pairs; data imbalance is somewhat reduced by using only the best dose combination for each tuple (cell line, drug 1, drug 2) as training and validation data.
 
-&#x1F534;_**(Question: I moved "tuple" to before the parenthetical, but will the audience already know what it is?)**_
+&#x1F534;_**(Question: I moved "tuple" to before the parenthetical, but will the audience already know what it is?)**_ G.Z. Yes it is fine
 
 #### Expected Outcomes
 * Regression: Predict percent growth for any NCI-60 cell line and drugs combination.
@@ -34,7 +31,7 @@ Given combination drug screening results on NCI60 cell lines available at the NC
 * Proposed network architecture: Two-stage neural network that is jointly trained for feature encoding and response prediction; shared submodel for each drug in the pair.
 * Number of layers: 3 layers for feature encoding submodels and 4 layers for response prediction submodels. 
 
-&#x1F534;_**(Question: I revised the 2nd bullet because "respectively" isn't usually used with a range like "3-4". Is my revision correct?)**_
+&#x1F534;_**(Question: I revised the 2nd bullet because "respectively" isn't usually used with a range like "3-4". Is my revision correct?)**_ G.Z. Yes it is fine.
 
 ### Setup
 To set up the Python environment needed to train and run this model:
@@ -185,7 +182,7 @@ Combo inference generates two files:
 
 Note that the inference code can be used to generate multiple predictions for the same sample-drug pair with the `--n_pred` parameter. This number is shown in the N column, and the sequential number for the individual predictions is denoted by Seq.
 
-Here is an example command line to make 10 point predictions for each sample-drug combination in a subsample of the GDSC data.
+Here is an example command line to make 10 point predictions for each sample-drug combination in a subsample of the Genomics of Drug Sensitivity in Cancer (GDSC) data.
 
 &#x1F534;_**(Question: What is GDSC? Will the audience already know?)**_
 
