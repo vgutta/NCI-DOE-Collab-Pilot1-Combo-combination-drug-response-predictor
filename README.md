@@ -3,19 +3,22 @@
 ### Description
 The combination drug response predictor (Combo) shows how to predict tumor cell line growth to drug pairs in the [NCI-ALMANAC](https://www.ncbi.nlm.nih.gov/pubmed/28446463) database using artificial neural networks.
 
+&#x1F534;_**(Question: In other repositories, the name of the capability was in Initial Caps. Is it okay that "combination drug response predictor" is all lowercase?)**_
+
 ### User Community
-Researchers interested in bioinformatics; computational cancer biology, drug discovery, and machine learning 
+Data scientists interested in bioinformatics; computational cancer biology, drug discovery, and machine learning.
 
 ### Usability
 Data scientists can train the provided untrained model with the shared preprocessed data or with their own preprocessed data, or can use the trained model to predict the drug response from the NCI-ALMANAC study. The provided scripts use data that have been downloaded from NCI-ALMANAC and normalized.
 
 ### Uniqueness
-Using machine learning to predict drug response can be carried using multiple techniques. The general rule is that classical methods like random forests would perform better for small size datasets, while neural network approaches like Combo would perform better for relatively larger size data.
+Data scientists can use multiple machine learning techniques to predict drug response. The general rule is that classical methods like random forests would perform better for small datasets, while neural network approaches like Combo would perform better for relatively larger datasets.
 
 ### Components
-* Processed training and test data
-* Untrained neural network model
-* Trained model weights and topology to be used in inference
+The following components are in the Model and Data Clearinghouse (MoDaC): 
+* The &#x1F534; (TBD) asset contains processed training and test data.
+* The &#x1F534; (TBD) asset contains the untrained neural network model.
+* The [Combination Drug Response Predictor (Combo)](https://modac.cancer.gov/searchTab?dme_data_id=NCI-DME-MS01-7678072) asset contains the trained model weights and topology to be used in inference. 
 
 ### Publication
 Xia, Fangfang, et al. ["Predicting tumor cell line response to drug pairs with deep learning."](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-018-2509-3?optIn=true) BMC bioinformatics 19.18 (2018): 71-79.
