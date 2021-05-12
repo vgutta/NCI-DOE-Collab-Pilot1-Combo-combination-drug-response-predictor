@@ -164,9 +164,10 @@ Comparing y_true and y_pred:
 
 There is a separate inference script that can be used to predict drug pair response on combinations of sample sets and drug sets with a trained model.
 
-A version of trained model files with dropout are available here: [TODO](http://ftp.mcs.anl.gov/pub/candle/public/benchmarks/Pilot1/combo/saved.uq.model.h5) and [TODO](http://ftp.mcs.anl.gov/pub/candle/public/benchmarks/Pilot1/combo/saved.uq.weights.h5).
+A version of trained model files with dropout are available on [MoDaC](https://modac.cancer.gov/searchTab?dme_data_id=NCI-DME-MS01-7678072).
 ```
 #small inference for testing
+$python download_model.py
 $python infer.py --sample_set NCIPDM --drug_set ALMANAC --use_landmark_genes -m uq.model.h5 -w uq.weights.h5
 
 Using TensorFlow backend.
@@ -187,6 +188,7 @@ Here is an example command line to make 10 point predictions for each sample-dru
 &#x1F534;_**(Question: What is GDSC? Will the audience already know?)**_
 
 ```
+$python download_model.py
 $python infer.py -s GDSC -d NCI_IOA_AOA --ns 10 --nd 5 --use_landmark_genes -m uq.model.h5 -w uq.weights.h5 -n 10
 
 $head comb_pred_GDSC_NCI_IOA_AOA.tsv
