@@ -22,8 +22,11 @@ import candle
 global_cache = {}
 
 SEED = 2017
-P1B3_URL = 'http://ftp.mcs.anl.gov/pub/candle/public/benchmarks/P1B3/'
-DATA_URL = 'http://ftp.mcs.anl.gov/pub/candle/public/benchmarks/Pilot1/combo/'
+
+P1B3_URL = 'https://modac.cancer.gov/api/v2/dataObject/NCI_DOE_Archive/JDACS4C/JDACS4C_Pilot_1/cancer_drug_response_prediction_dataset/'
+DATA_URL = 'https://modac.cancer.gov/api/v2/dataObject/NCI_DOE_Archive/JDACS4C/JDACS4C_Pilot_1/cancer_drug_response_prediction_dataset/'
+#P1B3_URL = 'http://ftp.mcs.anl.gov/pub/candle/public/benchmarks/P1B3/'
+#DATA_URL = 'http://ftp.mcs.anl.gov/pub/candle/public/benchmarks/Pilot1/combo/'
 
 
 def get_file(url):
@@ -524,7 +527,7 @@ def load_cell_expression_rnaseq(ncols=None, scaling='std', add_prefix=True, use_
 
     df = df[df['Sample'].str.startswith('NCI60')].reset_index(drop=True)
 
-    cellmap_path = get_file(DATA_URL + 'NCI60_CELLNAME_to_Combo.new.txt')
+    cellmap_path = get_file(DATA_URL + 'NCI60_CELLNAME_to_Combo.txt')
     df_cellmap = pd.read_csv(cellmap_path, sep='\t')
     df_cellmap.set_index('NCI60.ID', inplace=True)
     cellmap = df_cellmap[['CELLNAME']].to_dict()['CELLNAME']
