@@ -3,8 +3,6 @@
 ### Description
 The combination drug response predictor (Combo) shows how to predict tumor cell line growth to drug pairs in the [NCI-ALMANAC](https://www.ncbi.nlm.nih.gov/pubmed/28446463) database using artificial neural networks.
 
-&#x1F534;_**(Question: In other repositories, the name of the capability was in Initial Caps. Is it okay that "combination drug response predictor" is all lowercase?)**_
-
 ### User Community
 Data scientists interested in bioinformatics; computational cancer biology, drug discovery, and machine learning.
 
@@ -16,7 +14,7 @@ Data scientists can use multiple machine learning techniques to predict drug res
 
 ### Components
 The following components are in the Model and Data Clearinghouse (MoDaC): 
-* The &#x1F534; (TBD) asset contains processed training and test data.
+* The [Pilot 1 Cancer Drug Response Prediction Dataset](https://modac.cancer.gov/searchTab?dme_data_id=NCI-DME-MS01-8088592) asset contains processed training and test data.
 * The &#x1F534; (TBD) asset contains the untrained neural network model.
 * The [Combination Drug Response Predictor (Combo)](https://modac.cancer.gov/searchTab?dme_data_id=NCI-DME-MS01-7678072) asset contains the trained model weights and topology to be used in inference. 
 
