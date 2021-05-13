@@ -1,7 +1,5 @@
 ## Combo: Predicting Tumor Cell Line Response to Drug Pairs
 
-&#x1F534;_**Question: I see wording throughout the technical readme that seems to describe a capability that hasn't been built yet: "build" (both instances), "needed" (1st instance), "expected" (3 instances), and "proposed" (1 instance). Is this wording intentional?**_
-
 ### Overview
 Given combination drug screening results on NCI-60 cell lines available at the [NCI-ALMANAC](https://www.ncbi.nlm.nih.gov/pubmed/28446463) database, this deep learning network can predict the growth percentage from the cell line molecular features and the descriptors of both drugs.
 
