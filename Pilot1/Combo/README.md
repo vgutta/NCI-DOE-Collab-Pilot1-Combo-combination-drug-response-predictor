@@ -16,7 +16,7 @@ Given combination drug screening results on NCI-60 cell lines available at the [
    * 5-platform normalized expression, microRNA expression, and proteome abundance data from the NCI; 
    * Dragon7 generated drug descriptors based on 2D chemical structures from NCI.
 * Input dimensions: 
-   * ~30K with default options: 26K normalized expression levels by gene and 4K drug descriptors; &#x1F534;_**(Question: What is the unit for "~30K"? Is it saying about thirty thousand dimensions?)**_
+   * ~30K with default options: 26K normalized expression levels by gene and 4K drug descriptors; 
    * 59 cell lines; 
    * a subset of 54 FDA-approved drugs.
 * Output dimensions: 1 (growth percentage).
@@ -51,9 +51,7 @@ To set up the Python environment needed to train and run this model:
 
 ### Running the Baseline Implementation
 
-For a detailed explanation of command line arguments, refer to [combo.py](./combo.py).
-
-&#x1F534;_**(Question: Is this an example command? Or is it the only command?)**_
+To run the baseline implementation, execute the following command. For a detailed explanation of command line arguments, refer to [combo.py](./combo.py).
 
 ```
 $ cd Pilot1/Combo
@@ -186,10 +184,8 @@ Predicting drug response for 6381440 combinations: 590 samples x 104 drugs x 104
 The inference script also accepts models trained with [dropout as a Bayesian Approximation](https://arxiv.org/pdf/1506.02142.pdf) for uncertainty quantification. 
 
 Combo inference generates two files:
-* comb_pred_{cellset}_{drugset}.all.tsv has all prediction instances: [Sample, Drug1, Drug2, N, Seq, PredGrowth]
-* comb_pred_{cellset}_{drugset}.all.tsv contains the aggregated statistics: [Sample, Drug1, Drug2, N, PredGrowthMean, PredGrowthStd, PredGrowthMin, PredGrowthMax]
-
-&#x1F534;_**(Question: Why enclose the above lists in square brackets? Will the audience know what it means?)**_
+* comb_pred_{cellset}_{drugset}.all.tsv has all prediction instances: Sample, Drug1, Drug2, N, Seq, PredGrowth
+* comb_pred_{cellset}_{drugset}.all.tsv contains the aggregated statistics: Sample, Drug1, Drug2, N, PredGrowthMean, PredGrowthStd, PredGrowthMin, PredGrowthMax
 
 Note that the inference code can be used to generate multiple predictions for the same sample-drug pair with the `--n_pred` parameter. This number is shown in the N column, and the sequential number for the individual predictions is denoted by Seq.
 
