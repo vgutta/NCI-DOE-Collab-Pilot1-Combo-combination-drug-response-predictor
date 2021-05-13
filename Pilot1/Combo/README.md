@@ -3,11 +3,11 @@
 &#x1F534;_**Question: I see wording throughout the technical readme that seems to describe a capability that hasn't been built yet: "build" (both instances), "needed" (1st instance), "expected" (3 instances), and "proposed" (1 instance). Is this wording intentional?**_
 
 ### Overview
-Given combination drug screening results on NCI-60 cell lines available at the [NCI-ALMANAC](https://www.ncbi.nlm.nih.gov/pubmed/28446463) database, build a deep learning network that can predict the growth percentage from the cell line molecular features and the descriptors of both drugs.
+Given combination drug screening results on NCI-60 cell lines available at the [NCI-ALMANAC](https://www.ncbi.nlm.nih.gov/pubmed/28446463) database, this deep learning network can predict the growth percentage from the cell line molecular features and the descriptors of both drugs.
 
-**Relationship to core problem**: This benchmark is an example one of the core capabilities needed for the Pilot 1 Drug Response problem: combining multiple molecular assays and drug descriptors in a single deep learning framework for response prediction.
+**Relationship to core problem**: This benchmark is an example one of the core capabilities developed for the Pilot 1 Drug Response problem: combining multiple molecular assays and drug descriptors in a single deep learning framework for response prediction.
 
-**Expected outcome**: Build a Deep Neural Network that can predict growth percentage of a cell line treated with a pair of drugs.
+**Outcome**: This Deep Neural Network can predict growth percentage of a cell line treated with a pair of drugs.
 
 
 #### Description of the Data
@@ -24,17 +24,17 @@ Given combination drug screening results on NCI-60 cell lines available at the [
 * Notes on data balance: Ineffective drug pairs exceed effective pairs; data imbalance is somewhat reduced by using only the best dose combination for each tuple (cell line, drug 1, drug 2) as training and validation data.
 
 
-#### Expected Outcomes
+#### Outcomes
 * Regression: Predict percent growth for any NCI-60 cell line and drugs combination.
 * Dimension: 1 scalar value corresponding to the percent growth for a given drug concentration. 
 * Output range: [-100, 100].
 
 #### Evaluation Metrics
 * Accuracy or loss function: Mean squared error, mean absolute error, and R^2.
-* Expected performance of a naïve method: Mean response, linear regression, or random forest regression.
+* Performance of a naïve method: Mean response, linear regression, or random forest regression.
 
 #### Description of the Network
-* Proposed network architecture: Two-stage neural network that is jointly trained for feature encoding and response prediction; shared submodel for each drug in the pair.
+* Network architecture: Two-stage neural network that is jointly trained for feature encoding and response prediction; shared submodel for each drug in the pair.
 * Number of layers: 3 layers for feature encoding submodels and 4 layers for response prediction submodels. 
 
 
