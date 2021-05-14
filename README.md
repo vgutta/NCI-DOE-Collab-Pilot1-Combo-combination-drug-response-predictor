@@ -15,8 +15,7 @@ Data scientists can use multiple machine learning techniques to predict drug res
 ### Components
 The following components are in the Model and Data Clearinghouse (MoDaC): 
 * The [Pilot 1 Cancer Drug Response Prediction Dataset](https://modac.cancer.gov/searchTab?dme_data_id=NCI-DME-MS01-8088592) asset contains processed training and test data.
-* The &#x1F534; (TBD) asset contains the untrained neural network model.
-* The [Combination Drug Response Predictor (Combo)](https://modac.cancer.gov/searchTab?dme_data_id=NCI-DME-MS01-7678072) asset contains the trained model weights and topology to be used in inference. 
+* The [Combination Drug Response Predictor (Combo)](https://modac.cancer.gov/searchTab?dme_data_id=NCI-DME-MS01-7678072) asset contains the untrained model topology, and the trained model weights to be used in inference. 
 
 ### Publication
 Xia, Fangfang, et al. ["Predicting tumor cell line response to drug pairs with deep learning."](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-018-2509-3?optIn=true) BMC bioinformatics 19.18 (2018): 71-79.
