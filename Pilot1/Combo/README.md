@@ -196,11 +196,6 @@ Here is an example command line to make 10 point predictions for each sample-dru
 $python download_model.py
 $python infer.py -s GDSC -d NCI_IOA_AOA --ns 10 --nd 5 --use_landmark_genes -m uq.model.h5 -w uq.weights.h5 -n 10
 
-Using TensorFlow backend.
-total available samples:  670
-total available drugs:  680
-Predicting drug response for 250 combinations: 10 samples x 5 drugs x 5 drugs
-
 $head comb_pred_GDSC_NCI_IOA_AOA.tsv
 
 Sample	Drug1	Drug2	N	PredGrowthMean	PredGrowthStd	PredGrowthMin	PredGrowthMax
