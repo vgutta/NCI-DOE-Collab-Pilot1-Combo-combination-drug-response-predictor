@@ -3,7 +3,7 @@
 ### Overview
 Given combination drug screening results on NCI-60 cell lines available at the [NCI-ALMANAC](https://www.ncbi.nlm.nih.gov/pubmed/28446463) database, this deep learning network can predict the growth percentage from the cell line molecular features and the descriptors of both drugs.
 
-**Relationship to core problem**: This benchmark is an example one of the core capabilities developed for the Pilot 1 Drug Response problem: combining multiple molecular assays and drug descriptors in a single deep learning framework for response prediction.
+**Relationship to core problem**: This benchmark is an example of the core capabilities developed for the Pilot 1 Drug Response problem: combining multiple molecular assays and drug descriptors in a single deep learning framework for response prediction.
 
 **Outcome**: This Deep Neural Network can predict growth percentage of a cell line treated with a pair of drugs.
 
