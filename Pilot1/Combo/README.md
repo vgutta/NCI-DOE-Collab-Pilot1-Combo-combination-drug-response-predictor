@@ -175,8 +175,10 @@ $python download_model.py
 $python infer.py --sample_set NCIPDM --drug_set ALMANAC --use_landmark_genes -m uq.model.h5 -w uq.weights.h5
 
 Using TensorFlow backend.
-Predicting drug response for 6381440 combinations: 590 samples x 104 drugs x 104 drugs
-100%|██████████████████████████████████████████████████████████████████████| 639/639 [14:56<00:00,  1.40s/it]
+total available samples:  1198
+total available drugs:  104
+Predicting drug response for 12957568 combinations: 1198 samples x 104 drugs x 104 drugs
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████| 1296/1296 [34:30<00:00,  1.60s/it]
 ```
 
 The inference script also accepts models trained with [dropout as a Bayesian Approximation](https://arxiv.org/pdf/1506.02142.pdf) for uncertainty quantification. 
@@ -194,18 +196,23 @@ Here is an example command line to make 10 point predictions for each sample-dru
 $python download_model.py
 $python infer.py -s GDSC -d NCI_IOA_AOA --ns 10 --nd 5 --use_landmark_genes -m uq.model.h5 -w uq.weights.h5 -n 10
 
+Using TensorFlow backend.
+total available samples:  670
+total available drugs:  680
+Predicting drug response for 250 combinations: 10 samples x 5 drugs x 5 drugs
+
 $head comb_pred_GDSC_NCI_IOA_AOA.tsv
 
-Sample  Drug1   Drug2   N   PredGrowthMean  PredGrowthStd   PredGrowthMin   PredGrowthMax
-GDSC.22RV1  NSC.102816  NSC.102816  10  0.7323  0.1722  0.3545  0.8919
-GDSC.22RV1  NSC.102816  NSC.105014  10  0.7638  0.2280  0.1091  0.9200
-GDSC.22RV1  NSC.102816  NSC.109724  10  0.8755  0.0491  0.7893  0.9542
-GDSC.22RV1  NSC.102816  NSC.118218  10  0.8710  0.0424  0.7593  0.9130
-GDSC.22RV1  NSC.102816  NSC.122758  10  0.8558  0.0509  0.7437  0.9263
-GDSC.22RV1  NSC.105014  NSC.102816  10  0.7994  0.1995  0.2616  0.9429
-GDSC.22RV1  NSC.105014  NSC.105014  10  0.8662  0.0598  0.7160  0.9248
-GDSC.22RV1  NSC.105014  NSC.109724  10  0.8024  0.1276  0.4626  0.9312
-GDSC.22RV1  NSC.105014  NSC.118218  10  0.8673  0.1094  0.5828  1.0078
+Sample	Drug1	Drug2	N	PredGrowthMean	PredGrowthStd	PredGrowthMin	PredGrowthMax
+GDSC.22RV1	NSC.102816	NSC.102816	10	0.8323	0.0686	0.7075	0.9097
+GDSC.22RV1	NSC.102816	NSC.105014	10	0.8592	0.0423	0.7793	0.9084
+GDSC.22RV1	NSC.102816	NSC.109724	10	0.7813	0.1390	0.4145	0.8878
+GDSC.22RV1	NSC.102816	NSC.118218	10	0.8229	0.1202	0.5012	0.9607
+GDSC.22RV1	NSC.102816	NSC.122758	10	0.7887	0.1321	0.5180	0.8988
+GDSC.22RV1	NSC.105014	NSC.102816	10	0.8451	0.0446	0.7612	0.9114
+GDSC.22RV1	NSC.105014	NSC.105014	10	0.8216	0.1061	0.5697	0.9268
+GDSC.22RV1	NSC.105014	NSC.109724	10	0.8644	0.0895	0.6916	1.0093
+GDSC.22RV1	NSC.105014	NSC.118218	10	0.7915	0.1555	0.3921	0.9911
 ...
 ```
 
